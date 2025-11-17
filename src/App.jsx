@@ -2,6 +2,93 @@ import { useEffect, useState } from 'react'
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
 
+function AnimatedBrand() {
+  return (
+    <div className="relative overflow-hidden py-6">
+      <div className="relative">
+        <h1 className="text-[34px] sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+          <span className="brand-gold">FM RENTAL PRESTIGE</span>
+        </h1>
+        <p className="mt-3 sm:mt-4 text-rose-100/90 max-w-2xl">
+          Noleggio auto di lusso a Verona e Lago di Garda. Consegna in hotel o aeroporto, assistenza 24/7.
+        </p>
+      </div>
+
+      {/* Animated cars */}
+      <div className="pointer-events-none absolute left-0 right-0 -bottom-2 h-12">
+        <div className="relative h-full">
+          {/* road line */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-white/20">
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px]">
+              <div className="w-full h-full bg-gradient-to-r from-transparent via-amber-400/60 to-transparent blur-[1px] opacity-70" />
+            </div>
+          </div>
+
+          {/* car 1 */}
+          <Car className="car-run duration-[7s]" color="#f43f5e" accent="#f59e0b" />
+          {/* car 2 */}
+          <Car className="car-run delay-[1.5s] duration-[9s]" color="#f59e0b" accent="#f43f5e" small />
+        </div>
+      </div>
+
+      {/* styles for gradient text and animation */}
+      <style>{`
+        .brand-gold {
+          background: linear-gradient(90deg, #ffd166, #ffb703, #ffd166);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          text-shadow: 0 2px 12px rgba(255, 184, 3, 0.25);
+        }
+        @keyframes car-move {
+          0% { transform: translateX(-15%) translateY(-50%); }
+          100% { transform: translateX(115%) translateY(-50%); }
+        }
+        .car-run { position: absolute; top: 50%; left: 0; animation: car-move linear infinite; }
+        .duration-7s { animation-duration: 7s; }
+      `}</style>
+    </div>
+  )
+}
+
+function Car({ className = '', color = '#f43f5e', accent = '#f59e0b', small = false }) {
+  const size = small ? 36 : 48
+  return (
+    <svg
+      className={`${className}`}
+      width={size}
+      height={size}
+      viewBox="0 0 64 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.6))' }}
+    >
+      {/* body */}
+      <rect x="8" y="10" width="40" height="10" rx="3" fill={color} />
+      {/* cabin */}
+      <path d="M20 10 L30 5 L40 5 L44 10 Z" fill={color} />
+      {/* windows */}
+      <path d="M22 10 L30 6.5 L39 6.5 L41.5 10 Z" fill="white" opacity="0.8" />
+      {/* stripe */}
+      <rect x="10" y="14.5" width="34" height="2" rx="1" fill={accent} />
+      {/* wheels */}
+      <g>
+        <circle cx="18" cy="22" r="5" fill="#111" />
+        <circle cx="18" cy="22" r="2" fill="#888" />
+        <circle cx="40" cy="22" r="5" fill="#111" />
+        <circle cx="40" cy="22" r="2" fill="#888" />
+      </g>
+      {/* headlight */}
+      <rect x="47" y="13.5" width="4" height="3" rx="1" fill="#fff3c4" />
+      {/* motion lines */}
+      <g opacity="0.5">
+        <rect x="6" y="16" width="6" height="1.5" rx="0.75" fill={color} />
+        <rect x="2" y="18" width="4" height="1.5" rx="0.75" fill={color} />
+      </g>
+    </svg>
+  )
+}
+
 function Hero() {
   return (
     <section className="relative overflow-hidden">
@@ -9,12 +96,7 @@ function Hero() {
       <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center" />
       <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-28">
         <div className="max-w-3xl">
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white">
-            FMRENTALPRESTIGE
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl text-rose-100/90">
-            Noleggio auto di lusso a Verona e Lago di Garda. Servizio premium, consegna in hotel o aeroporto, assistenza 24/7.
-          </p>
+          <AnimatedBrand />
           <div className="mt-8 flex gap-3">
             <a href="#prenota" className="px-5 py-3 bg-rose-600 hover:bg-rose-500 text-white font-semibold rounded-lg shadow-lg shadow-rose-600/30 transition">Prenota ora</a>
             <a href="#flotta" className="px-5 py-3 bg-black/60 hover:bg-black text-white font-semibold rounded-lg border border-white/10 transition">Vedi flotta</a>
@@ -176,7 +258,7 @@ function Footer() {
   return (
     <footer className="border-t border-white/10 bg-black/60">
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-white font-semibold">FMRENTALPRESTIGE</p>
+        <p className="text-white font-semibold">FM RENTAL PRESTIGE</p>
         <div className="flex items-center gap-3 text-white/80">
           <a href="https://www.tiktok.com" target="_blank" className="hover:text-white">TikTok</a>
           <a href="https://www.instagram.com" target="_blank" className="hover:text-white">Instagram</a>
